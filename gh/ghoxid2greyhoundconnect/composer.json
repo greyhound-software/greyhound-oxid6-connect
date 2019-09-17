@@ -1,0 +1,21 @@
+{
+    "name": "greyhound-software/greyhound-oxid6-connect",
+    "description": "Support module for the GREYHOUND OXID Connect addon",
+    "type": "oxideshop-module",
+    "keywords": ["greyhound", "modules"],
+    "homepage": "https://greyhound-software.com/OXID_eShop",
+    "license": "MIT",
+    "extra": {
+        "oxideshop": {
+            "target-directory": "gh/ghoxid2greyhoundconnect"
+        }
+    },
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Greyhound\\Connect\\": "../../../source/modules/gh/ghoxid2greyhoundconnect"
+        }
+    }
+}
