@@ -122,7 +122,7 @@ class ApiController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
             $oRequest = $this->_ghGetRequest();
 
             $this->_ghSendResponse($this->_ghGetRequestResponse($oRequest));
-        } catch (Exception $oException) {
+        } catch (\Exception $oException) {
             $this->_ghSendError($oException);
         }
     }
