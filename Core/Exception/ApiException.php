@@ -49,4 +49,14 @@ class ApiException extends \OxidEsales\Eshop\Core\Exception\StandardException
     {
         parent::__construct($message, $code);
     }
+
+    /**
+     * Sets the error code of the exception.
+     *
+     * @param integer $code error code
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
 }
