@@ -32,11 +32,11 @@ $aModule = array(
     'version' => '2.0.2',
     'title' => array(
         'en' => 'GREYHOUND OXID Connect Module',
-        'de' => 'GREYHOUND OXID Connect Modul',
+        'de' => 'GREYHOUND OXID Connect Modul'
     ),
     'description' => array(
         'en' => 'Support module for the GREYHOUND OXID Connect addon',
-        'de' => 'Modul zur Unterstützung des GREYHOUND OXID Connect Addons',
+        'de' => 'Modul zur Unterstützung des GREYHOUND OXID Connect Addons'
     ),
     'thumbnail' => 'module-thumbnail.jpg',
     'url' => 'http://greyhound-software.com',
@@ -46,10 +46,14 @@ $aModule = array(
         'onActivate' => '\Greyhound\Connect\Core\Events::onActivate'
     ),
     'settings' => [
-        array( 'group' => 'api', 'name' => 'sGhApiKey', 'position' => 10, 'type' => 'str', 'value' => '' ),
-        array( 'group' => 'api', 'name' => 'blGhApiAllowNonSsl', 'position' => 20, 'type' => 'bool', 'value' => '0' ),
-        array( 'group' => 'api', 'name' => 'blGhApiIncludeSubshops', 'position' => 30, 'type' => 'bool', 'value' => '0' ),
+        array('group' => 'api', 'name' => 'sGhApiKey', 'position' => 10, 'type' => 'str', 'value' => ''),
+        array('group' => 'api', 'name' => 'sGhApiUrl', 'position' => 15, 'type' => 'str', 'value' => ''),
+        array('group' => 'api', 'name' => 'blGhApiAllowNonSsl', 'position' => 20, 'type' => 'bool', 'value' => '0'),
+        array('group' => 'api', 'name' => 'blGhApiIncludeSubshops', 'position' => 30, 'type' => 'bool', 'value' => '0')
     ],
+    'extend' => array(
+        \OxidEsales\Eshop\Application\Controller\Admin\ModuleConfiguration::class => \Greyhound\Connect\Controller\Admin\ModuleConfiguration::class
+    ),
     'controllers' => array(
         'ghoxid2greyhoundconnectapi' => \Greyhound\Connect\Controller\ApiController::class
     )
