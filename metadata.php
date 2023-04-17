@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2019 GREYHOUND Software
+ * Copyright (c) 2019-2023 GREYHOUND Software
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ $sMetadataVersion = '2.0';
 
 $aModule = array(
     'id' => 'ghoxid2greyhoundconnect',
-    'version' => '2.0.3',
+    'version' => '2.0.4',
     'title' => array(
         'en' => 'GREYHOUND OXID Connect Module',
         'de' => 'GREYHOUND OXID Connect Modul'

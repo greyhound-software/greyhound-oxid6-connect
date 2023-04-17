@@ -330,7 +330,7 @@ class ApiController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
         foreach ($aSearchTerm as $sSearchTerm) {
             $sSearchTerm = trim($sSearchTerm);
             $iMaxLength = max($iMaxLength, strlen($sSearchTerm));
-            $blDigitsOnly = $blDigitsOnly && preg_match('/[^0-9]/', $sSearchTerm);
+            $blDigitsOnly = $blDigitsOnly && !preg_match('/[^0-9]/', $sSearchTerm);
             $aSearchConditions[] = $oDb->quote($sSearchTerm);
         }
 

@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2019 GREYHOUND Software
+ * Copyright (c) 2019-2023 GREYHOUND Software
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ use OxidEsales\Eshop\Core\Registry as oxRegistry;
  * @subpackage Controller
  *
  * @author GREYHOUND Software GmbH &amp; Co. KG <develop@greyhound-software.com>
- * @copyright 2019 GREYHOUND Software GmbH &amp; Co. KG
+ * @copyright 2019-2023 GREYHOUND Software GmbH &amp; Co. KG
  * @link greyhound-software.com
  */
 class ModuleConfiguration extends ModuleConfiguration_parent
