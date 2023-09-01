@@ -29,7 +29,7 @@ $sMetadataVersion = '2.0';
 
 $aModule = array(
     'id' => 'ghoxid2greyhoundconnect',
-    'version' => '2.0.4',
+    'version' => '2.0.5',
     'title' => array(
         'en' => 'GREYHOUND OXID Connect Module',
         'de' => 'GREYHOUND OXID Connect Modul'

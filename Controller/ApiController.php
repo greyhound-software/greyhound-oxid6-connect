@@ -4,7 +4,7 @@
  *
  * MIT License
  *
- * Copyright (c) 2019 GREYHOUND Software
+ * Copyright (c) 2019-2023 GREYHOUND Software
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ use Greyhound\Connect\Core\Exception\ApiException;
  * @subpackage Controller
  *
  * @author GREYHOUND Software GmbH &amp; Co. KG <develop@greyhound-software.com>
- * @copyright 2019 GREYHOUND Software GmbH &amp; Co. KG
+ * @copyright 2019-2023 GREYHOUND Software GmbH &amp; Co. KG
  * @link greyhound-software.com
  */
 class ApiController extends \OxidEsales\Eshop\Application\Controller\FrontendController
@@ -285,14 +285,21 @@ class ApiController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
 
             case 'orderno':
                 return 'oxordernr ' . $sSearchCondition;
-                break;
 
             default:
                 if ($blDigitsOnly) {
-                    if ($iMaxLength == 5) {
-                        return 'oxordernr ' . $sSearchCondition . ' OR oxbillzip ' . $sSearchCondition . ' OR oxdelzip ' . $sSearchCondition;
+                    $sCustomersCondition = $this->_ghSearchCustomersCondition($sSearchCondition);
+
+                    if ($sCustomersCondition) {
+                        $sCustomersCondition = ' OR oxuserid ' . $sCustomersCondition;
                     } else {
-                        return 'oxordernr ' . $sSearchCondition;
+                        $sCustomersCondition = '';
+                    }
+
+                    if ($iMaxLength == 5) {
+                        return 'oxordernr ' . $sSearchCondition . ' OR oxbillnr ' . $sSearchCondition . ' OR oxbillzip ' . $sSearchCondition . ' OR oxdelzip ' . $sSearchCondition . $sCustomersCondition;
+                    } else {
+                        return 'oxordernr ' . $sSearchCondition . ' OR oxbillnr ' . $sSearchCondition . $sCustomersCondition;
                     }
                 } else {
                     return 'oxbillcity ' . $sSearchCondition . ' OR oxdelcity ' . $sSearchCondition . ' OR oxbilllname ' . $sSearchCondition . ' OR oxdellname ' . $sSearchCondition;
@@ -347,6 +354,46 @@ class ApiController extends \OxidEsales\Eshop\Application\Controller\FrontendCon
         }
 
         return 'SELECT * FROM oxorder WHERE ' . $sQueryCondition;
+    }
+
+    /**
+     * Searches for customers and returns their ids.
+     *
+     * @throws Greyhound\Connect\Core\Exception\ApiException if an error occurs during the search or if the params aren't valid
+     *
+     * @param string $sSearchCondition search condition
+     * @return string
+     */
+    protected function _ghSearchCustomersCondition($sSearchCondition)
+    {
+        $aResult = array();
+        $oDb = DatabaseProvider::getDb();
+        $sQueryCondition = 'oxcustnr ' . $sSearchCondition;
+
+        if ($this->_ghLimitToShopId()) {
+            $sQueryCondition = 'oxshopid = ' . $oDb->quote(oxRegistry::getConfig()->getShopId()) . ' AND (' . $sQueryCondition . ')';
+        }
+
+        $oUsers = oxNew(\OxidEsales\Eshop\Core\Model\ListModel::class);
+        $oUsers->init(\OxidEsales\Eshop\Application\Model\User::class);
+        $oUsers->selectString('SELECT oxid FROM oxuser WHERE ' . $sQueryCondition);
+        $aUserIds = [];
+
+        foreach ($oUsers as $oUser) {
+            $sUserId = $oUser->oxuser__oxid->value;
+
+            if ($sUserId) {
+                $aUserIds[] = $oDb->quote($sUserId);
+            }
+        }
+
+        if (count($aUserIds) > 1) {
+            return ' IN (' . implode( ', ', $aUserIds ) . ')';
+        } else if (count($aUserIds) == 1) {
+            return ' = ' . $aUserIds[0];
+        } else {
+            return '';
+        }
     }
 
     /**
